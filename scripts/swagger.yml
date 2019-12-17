@@ -1,0 +1,104 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: "Hello World App"
+tags:
+  - name: "hello"
+host:
+  localhost:8080
+schemes:
+  - http
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /hello:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: hello_world
+    options:
+      $ref: default-CORS-response
+    get:
+      summary: Say Hello
+      operationId: sayHello
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: query
+          description: The name of the person to whom to say hello
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/HelloWorldResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  HelloWorldResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+  ErrorResponse:
+    required:
+      - errorMessage
+    properties:
+      errorMessage:
+        type: string
+
+# https://github.com/JamesMessinger/swagger-suite/blob/master/samples/CORS.yaml
+  default-CORS-response:
+    description: >
+      The "OPTIONS" HTTP method is used for the CORS preflight request.
+      Basically, the client browser is asking the server for permission
+      to send the real HTTP request.
+    responses:
+      default:
+        description: >
+          Swagger-Server automatically handles the following CORS headers
+          without any special configuration on your part (you don't even
+          need to specify an OPTIONS operation in your Swagger spec).
+        headers:
+          Access-Control-Allow-Origin:
+            type: string
+            description: >
+              By default, Swagger-Server will echo back the `Origin`
+              request header (e.g. `http://yoursite.com`)
+          Access-Control-Allow-Credentials:
+            type: boolean
+            description: >
+              By default, Swagger-Server will return `true`.
+              This enables cookies.
+          Access-Control-Allow-Headers:
+            type: array
+            collectionFormat: csv
+            description: >
+              By default, Swagger-Server will echo back the
+              `Access-Control-Request-Headers` request header
+              (e.g. `Content-Type, X-Powered-By`)
+          Access-Control-Allow-Methods:
+            type: array
+            collectionFormat: csv
+            description: >
+              By default, Swagger-Server will return the list of operations
+              that are defined in your Swagger spec for the path
+              (e.g. `GET, POST, PUT, DELETE`)
+          Access-Control-Max-Age:
+            type: integer
+            description: >
+              By default, Swagger-Server will return `0` (zero). This
+              disables CORS caching by the client browser, which simplifies
+              development and debugging.  But feel free to change this to a
+              higher number when you go to production.

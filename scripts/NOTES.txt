@@ -1,0 +1,84 @@
+Jasmine / Typescript version problem
+Go here...
+https://www.npmjs.com/package/@types/jasmine
+and find out the versions of Jasmine that go with versons of Typescript.
+The problem is that Angular-cli needs an older version of Typescript
+ @angular/compiler-cli@5.2.11 requires typescript@'>=2.4.2 <2.7.0' but 2.9.2 was found instead.
+From package-lock.json we are using "typescript""version": "2.6.2",
+https://www.npmjs.com/package/@types/jasmine/v/2.8.9
+
+npm install jasmine@^2.8.9
+
+npm install @types/jasmine
+
+
+Getting Webstorm to work with the Angular client project
+https://www.jetbrains.com/help/webstorm/angular.html
+
+Angular Dependency Injection Tutorial.
+Shows you how to get a component to work with a HTMP page.
+https://www.codingame.com/playgrounds/8003/angular-dependency-injection-tutorial
+
+In depth dependency injection reading.
+https://angular.io/guide/dependency-injection
+
+package installation error?????
+https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview
+
+npm install @angular/core
+https://www.techiediaries.com/angular-by-example-httpclient-get/
+
+https://stackoverflow.com/questions/47058226/angular4-and-swagger-client
+
+
+https://morioh.com/p/d9a109def680
+
+Hooking up the swagger-codegen api with the angular-cli generated app...
+https://github.com/swagger-api/swagger-codegen/blob/master/samples/client/petstore/typescript-angular-v5/npm/README.md#general-usage
+
+
+???????----\/
+
+https://dzone.com/articles/angular-7-spring-boot-application-hello-world-exam
+
+Angular 7
+https://www.baeldung.com/spring-boot-angular-web
+
+https://editor.swagger.io/
+
+Consuming the API with @angular/cli
+https://angular.schule/blog/2018-04-swagger-codegen
+Uses  "https://api.angular.schule/" "https://angular.schule/"
+
+Extend "swagger-codegen-test/hello-world-client/client/src/app/app.module.ts"
+
+https://medium.com/@balramchavan/generate-angular-ionic-client-code-from-openapi-swagger-rest-api-specifications-128a6899681a
+
+https://www.youtube.com/watch?v=96ri9zHeSJM
+
+https://stackoverflow.com/questions/51572640/index-ts-is-missing-from-the-typescript-compilation
+hello-world-client/client/src :
+{
+  "compileOnSave": false,
+  "include": [
+    "src/**/*",
+    "node_modules/hello-world-api/index.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
+}
+

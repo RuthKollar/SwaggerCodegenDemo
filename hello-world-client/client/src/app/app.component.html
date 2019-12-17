@@ -24,20 +24,23 @@
     <img width="300" alt = "face" src = "assets/images/IMG_2201.JPG" class = "angryface" >
   </div>
 
-
 </div>
 
-
 <h2>
-
   Links:
-
 </h2>
 <ul>
   <li>
     <h2><a href = "https://github.com/RuthKollar/SwaggerCodegenDemo" class = "githubLink">Source code is at Github</a></h2>
   </li>
-
+  <li>
+    <h2>{{showMyRandomNumber()}} !!!</h2>h2>
+  </li>
+  <li>
+    <input (input)="value=$event.target.value" type="text" class="form-control">
+    <button type="button" class="btn btn-success" (click)="helloWorldGet()">Send to Server</button>
+    {{ helloWorldGetMessage() }}
+  </li>
   <li>
     <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial" class = "link1">Tour of Heroes</a> </h2>
   </li>

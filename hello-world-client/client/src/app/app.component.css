@@ -1,0 +1,105 @@
+
+h1 {
+  border-style: dotted;
+  border-color: #3B67AF;
+  color: #3B67AF;
+}
+
+h2 {
+  color: #3B67AF;
+}
+
+ul {
+  border-style: dotted;
+  border-color: #3B67AF;
+  color:#8CB8E7;
+
+}
+
+.faceContainer{
+  display:grid;
+  padding: 10px;
+  grid-gap: 70px;
+  grid-template-columns: 300px 300px 300px;
+}
+
+.hmmface3div{
+  position: relative;
+  width:100%;
+}
+
+.hmmface1div{
+  position: relative;
+  width: 100%;
+}
+
+.hmmface3{
+  display: block;
+  width:100%;
+  height: auto;
+}
+
+.hmmface1{
+  display: block;
+  width:100%;
+  height: auto;
+}
+
+
+.blue{
+  position: absolute;
+  top: 100%;
+  left:0;
+  right:0;
+  overflow:hidden;
+  height:0;
+  transition:5s ;
+  background-color: #8CB8E7;
+}
+.angryface {
+  position: absolute;
+  top: 100%;
+  left:0;
+  right:0;
+  overflow:hidden;
+  height:0;
+  transition:.1s ;
+}
+
+.hmmface1div:hover .blue{
+  top:0;
+  height:100%;
+}
+.hmmface2:hover{
+  border-radius: 180%;
+  height: 10%;
+  width: 10%;
+  alignment: center;
+  transition: 2s;
+
+}
+
+.hmmface3div:hover .angryface{
+  top:0;
+  height:100%;
+}
+
+
+.githubLink{
+  font-size: 20px;
+  color: #008CBA;
+}
+.link1 {
+  color: fuchsia;
+}
+.link2 {
+  color: greenyellow;
+}
+.link3 {
+  color: orange;
+}
+
+
+
+
+

@@ -1,0 +1,148 @@
+Modifications to the server:
+
+1) In com.kollar.service.api.DefaultApiController add the MSAPI endpoint....
+
+    //TODO: You need to implement the interface!
+    public ResponseEntity<HelloWorldResponse> sayHello(@ApiParam(value = "The name of the person to whom to say hello") @Valid @RequestParam(value = "name", required = false) String name) {
+        final HelloWorldResponse response = new HelloWorldResponse();
+        if (StringUtils.isEmpty(name)) {
+            response.setMessage("Hello!");
+        } else {
+            response.setMessage("Hello " + name + "!");
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+2) In com.kollar.service.api.DefaultApi remove the line that contains. Becuase Spring get's confused since a GET doesn't have a body! Otherwise you get an error invalid content type ''.  NUTS.
+
+consumes = { "application/json" },
+
+
+3) So that the RESTful web service will include CORS access control headers in its response, you just have to add a @CrossOrigin annotation to the handler method.
+https://spring.io/guides/gs/rest-service-cors/
+Why the response is broken...
+https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+Just add the first line....
+
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @ApiOperation(value = "Say Hello", nickname = "sayHello", notes = "", response = HelloWorldResponse.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Success", response = HelloWorldResponse.class),
+        @ApiResponse(code = 200, message = "Error", response = ErrorResponse.class) })
+    @RequestMapping(value = "/hello",
+        produces = { "application/json" },
+        method = RequestMethod.GET)
+
+4) Add these lines to "build/hello-world-server/.swagger-codegen-ignore" to keep the build task from overwriting them.
+src/main/java/com/kollar/service/api/DefaultApi.java
+src/main/java/com/kollar/service/api/DefaultApiController.java
+
+NOTE: Clean will still nuke all of the build dir.
+
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home
+
+https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat/2.1.10.RELEASE
+Tomcat 9.0.27
+https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.27/
+
+curl "https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz" > apache-tomcat-9.0.27.tar.gz
+
+https://blogs.perficient.com/2017/08/18/design-develop-and-deploy-apis-with-swaggerhub-and-spring/
+run 'mvn install' to create a jar.
+
+https://github.com/swagger-api/swagger-codegen/wiki/Server-stub-generator-HOWTO
+To Use-it : in the generated folder try 'mvn package' for build jar.
+Start your server java -jar target/swagger-springboot-server-1.0.0.jar SpringBoot listening on default port 8080
+
+$ brew update
+$ brew install maven
+
+
+
+
+Testing the server by hand...
+
+$ curl -v -X GET -H "Content-Type: application/json" "http://localhost:8080/hello?name=Froto"
+$ curl -v -X GET -H "Content-Type: application/json" "http://localhost:8080/hello"
+
+
+# Get the spec for the Angular
+$ curl -v -X GET -H "Content-Type: application/json" "http://localhost:8080/v2/api-docs" > spec.json
+
+
+
+
+
+Getting Webstorm to work with the Angular client project
+https://www.jetbrains.com/help/webstorm/angular.html
+
+Angular Dependency Injection Tutorial.
+Shows you how to get a component to work with a HTMP page.
+https://www.codingame.com/playgrounds/8003/angular-dependency-injection-tutorial
+
+In depth dependency injection reading.
+https://angular.io/guide/dependency-injection
+
+package installation error?????
+https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview
+
+npm install @angular/core
+https://www.techiediaries.com/angular-by-example-httpclient-get/
+
+https://stackoverflow.com/questions/47058226/angular4-and-swagger-client
+
+
+https://morioh.com/p/d9a109def680
+
+Hooking up the swagger-codegen api with the angular-cli generated app...
+https://github.com/swagger-api/swagger-codegen/blob/master/samples/client/petstore/typescript-angular-v5/npm/README.md#general-usage
+
+
+???????----\/
+
+https://dzone.com/articles/angular-7-spring-boot-application-hello-world-exam
+
+Angular 7
+https://www.baeldung.com/spring-boot-angular-web
+
+https://editor.swagger.io/
+
+Consuming the API with @angular/cli
+https://angular.schule/blog/2018-04-swagger-codegen
+Uses  "https://api.angular.schule/" "https://angular.schule/"
+
+Extend "swagger-codegen-test/hello-world-client/client/src/app/app.module.ts"
+
+https://medium.com/@balramchavan/generate-angular-ionic-client-code-from-openapi-swagger-rest-api-specifications-128a6899681a
+
+https://www.youtube.com/watch?v=96ri9zHeSJM
+
+https://stackoverflow.com/questions/51572640/index-ts-is-missing-from-the-typescript-compilation
+hello-world-client/client/src :
+{
+  "compileOnSave": false,
+  "include": [
+    "src/**/*",
+    "node_modules/hello-world-api/index.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
+}
+

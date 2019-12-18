@@ -3,3 +3,4 @@ client/.DS_Store
 client/src/.DS_Store
 client/src/assets/.DS_Store
 lib/**
+hello-world-server/build/**

@@ -1,0 +1,5 @@
+// https://blog.arnoldgalovics.com/generating-stubs-with-swagger-codegen-and-gradle/
+
+rootProject.name = 'hello-world'
+include "${rootProject.name}-server"
+

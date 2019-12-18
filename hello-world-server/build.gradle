@@ -1,0 +1,135 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        // For shadowJar...
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    ext.springBootVersion = '2.1.10.RELEASE'
+    dependencies {
+        classpath "io.swagger:swagger-codegen:2.4.9"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    }
+    ext.appName      = 'hello-world'
+    ext.jarVersion   = '0.0.2-SNAPSHOT'
+    ext.apiPackage   = 'com.kollar.service.api'
+    ext.modelPackage = 'com.kollar.service.model'
+    ext.swaggerFile  = "${rootDir}/api/swagger.yml"
+}
+
+apply plugin: 'base'
+apply plugin: 'idea'
+apply plugin: 'application'
+
+import io.swagger.codegen.DefaultGenerator
+import io.swagger.codegen.config.CodegenConfigurator
+
+//  block is used to add configuration items that will apply to all sub-projects as well as the root project
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+// block can be used to add configurations items for all sub-projects only
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+
+    // https://auth0.com/blog/spring-5-embedded-tomcat-8-gradle-tutorial/
+    // https://github.com/johnrengelman/shadow/issues/336
+    // The war plugin is needed for the shadow plugin...
+    apply plugin: 'war'
+    apply plugin: 'com.github.johnrengelman.shadow'
+    // Tasks / shadow / shadowJar
+    // Resulting JAR is found in build/hellow-world-server/libs
+    shadowJar {
+        mergeServiceFiles()
+        mainClassName = 'io.swagger.Swagger2SpringBoot'
+    }
+    // hello-world / other / sourcesJar
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives sourcesJar
+    }
+
+    version = '0.0.1-SNAPSHOT'
+}
+
+project("${rootProject.name}-server") {
+    
+    dependencies {
+        compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        compile "org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}"
+        compile "io.springfox:springfox-swagger2:2.9.2"
+        compile "javax.xml.bind:jaxb-api:2.1"
+    }
+    
+    war {
+        enabled = true
+    }
+
+    // Needed for :bootWar
+    mainClassName = 'io.swagger.Swagger2SpringBoot'
+
+    sourceSets {
+        main.java.srcDir "${project.buildDir}/src/main/java"
+        main.resources.srcDir "${project.buildDir}/src/main/resources"
+    }
+
+    // https://github.com/thebignet/swagger-codegen-gradle-plugin-example/blob/master/README.md
+    // Actual task for generating the server
+    task generateServer {
+        doLast {
+            def config = new CodegenConfigurator()
+            config.setLang("spring")
+            config.setApiPackage(rootProject.apiPackage)            // Package to be used for the API interfaces
+            config.setModelPackage(rootProject.modelPackage)        // Package to be used for the API models
+            config.setInputSpec(rootProject.swaggerFile.toString()) // The swagger API file
+            config.setOutputDir(project.buildDir.toString())        // The output directory, user-service-contract/build/user-service-server/
+            config.setAdditionalProperties([
+                    'dateLibrary'     : 'java8', // Date library to use
+                    'useTags'         : 'true',  // Use tags for the naming
+                    'interfaceOnly'   : 'false',
+                    'skipOverwrite'   : 'false'
+            ])
+            new DefaultGenerator().opts(config.toClientOptInput()).generate() // Executing the generation
+        }
+    }
+
+    task patchServer(type: Exec) {
+        workingDir "${rootDir}"
+        commandLine "./scripts/patch-server.sh"
+    }
+    patchServer.dependsOn('generateServer')
+    compileJava.dependsOn('patchServer')
+
+    // https://github.com/spring-projects/spring-boot/blob/2.1.x/spring-boot-project/spring-boot-autoconfigure/src/main/resources/META-INF/spring.factories
+    jar {
+        manifest {
+            attributes(
+                    'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                    'Main-Class': 'io.swagger.Swagger2SpringBoot'
+            )
+        }
+        from configurations.compile.collect { entry -> zipTree(entry) }
+        enabled=true
+    }
+
+    def versionFile = project.file("${project.buildDir}/.swagger-codegen/VERSION")
+    clean {
+        if (versionFile.exists()) {
+            print('%%%% Skipping swagger codegen as code has already been generated. Manually delete the project build directory to proceed.')
+            return
+        }
+        // make sure we're generating from scratch
+        //getOutputDir().deleteDir()
+    }
+}

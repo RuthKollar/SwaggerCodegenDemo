@@ -5,6 +5,21 @@ export angularCliAppBaseDir="hello-world-client"
 
 source ./scripts/common.sh
 
+which java > /dev/null
+result="$?"
+if [ "$result" -ne 0 ]; then
+    echo "Please install java.'"
+    exit 1
+fi
+
+which jq > /dev/null
+result="$?"
+if [ "$result" -ne 0 ]; then
+    # https://brew.sh/
+    echo "Please install jq with 'brew install jq'"
+    exit 1
+fi
+
 echo "### Creating base directory $swaggerApiBaseDir..."
 if [ ! -d $swaggerApiBaseDir ] ; then
     mkdir -p $swaggerApiBaseDir
@@ -37,6 +52,11 @@ if [ ! -d client ] ; then
     echo "### Building the client API..."
     java -jar ../lib/$codegenJar generate -l typescript-angular -i ../api/swagger.yml -o client -c $clientOptionsJson
 
+    #### NEW...
+    echo "### Adding TypeScript inclusion for the library as it is no longer provided..."
+    export tsconfigAppJson=./client/tsconfig.json
+    jq '. + {"include": [ "./*.ts", "./model/*.ts", "./api/*.ts" ]}' < $tsconfigAppJson 1<> $tsconfigAppJson
+
     echo "### Compile the Angular package to the dist directory..."
     pushd client
     # https://docs.npmjs.com/cli/install
@@ -49,7 +69,7 @@ if [ ! -d client ] ; then
     fi
     # https://docs.npmjs.com/cli/build.html
     echo "### Building npm module..."
-    npm build
+    npm build .
 
     # https://docs.npmjs.com/cli/pack.html
     echo "### Packaging npm module..."
@@ -91,7 +111,11 @@ if [ ! -d client ] ; then
     # https://angular.schule/blog/2018-04-swagger-codegen
     # Need to add "API_BASE_PATH: 'http://localhost:8080'" after "production: false,"
     export localEnvironmentTs=../../$angularCliAppBaseDir/client/src/environments/environment.ts
-    sed "s/  production: false/  production: false, API_BASE_PATH: 'http:\/\/localhost:8080'/" < $localEnvironmentTs 1<> $localEnvironmentTs
+    grep 'API_BASE_PATH' $localEnvironmentTs > /dev/null
+    result="$?"
+    if [ "$result" -ne 0 ]; then
+        sed "s/  production: false/  production: false, API_BASE_PATH: 'http:\/\/localhost:8080'/" < $localEnvironmentTs 1<> $localEnvironmentTs
+    fi
 
     echo "### Copying client/src/app files..."
     cp ../../scripts/client/src/app/* ../../$angularCliAppBaseDir/client/src/app
@@ -107,3 +131,4 @@ if [ ! -d client ] ; then
 fi
 
 echo "Done!"
+exit 0

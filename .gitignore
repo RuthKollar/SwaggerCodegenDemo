@@ -1,7 +1,8 @@
 .DS_Store
 **/.DS_Store
+**/.gradle
 lib/**
 hello-world-server/build/**
-hello-world-server/.gradle/**
 hello-world-client/client/.idea/**
+.idea/**
 **~

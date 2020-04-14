@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./scripts/common-exports.sh
+
 # https://cli.angular.io/
 
 which npm > /dev/null
@@ -10,7 +12,9 @@ if [ "$result" -ne 0 ]; then
     exit 1
 fi
 
-mkdir hello-world-client
+if [ ! -d $angularCliAppBaseDir ] ; then
+    mkdir $angularCliAppBaseDir
+fi
 cd hello-world-client
 
 npm install -g npm

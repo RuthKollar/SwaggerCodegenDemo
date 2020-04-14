@@ -1,8 +1,5 @@
 #!/bin/bash
 
-export swaggerApiBaseDir="hello-world-swaggerApi"
-export angularCliAppBaseDir="hello-world-client"
-
 source ./scripts/common.sh
 
 which java > /dev/null

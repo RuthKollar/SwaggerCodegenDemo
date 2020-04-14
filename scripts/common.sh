@@ -1,8 +1,6 @@
 #!/bin/bash
 
-export codegenJar="swagger-codegen-cli.jar"
-export codegenCliVersion="2.4.10"
-
+source ./scripts/common-exports.sh
 
 if [ ! -d lib ] ; then
     echo "### Downloading swagger-codegen into lib directory..."

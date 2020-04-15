@@ -42,7 +42,14 @@ In the  module named **hello-world-server** you will need to open **File / Proje
 
 Then refresh the gradle dependencies, and under the gradle tab **hello-world / Tasks / build** run the task **clean**, and in **hello-world / Tasks / shadow** run the task **shadowJar**.
 
-After that (also in IntelliJ) you can run (right click and select run) the class **io.swagger.Swagger2SpringBoot** found in **hello-world-server/build/hello-world-server/src/main/java**, or run the JAR file found at **hello-world-server/build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar**.
+After that (also in IntelliJ) you can run (right click and select run) the class **io.swagger.Swagger2SpringBoot** found in **hello-world-server/build/hello-world-server/src/main/java**, or run the JAR file found at **hello-world-server/build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar**. Alternatively, from the command line...
+
+```
+$ cd hello-world-server
+$ rm -rf build
+$ ./gradlew clean shadowJar
+$ java -jar  build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar
+```
 
 You can test the server REST API endpoint using the following the **curl** utility from the command line:
 

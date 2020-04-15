@@ -2,6 +2,25 @@
 
 > The purpose of this repository is to create THE MOST minimal end-to-end example of a web client using <a href="https://cli.angular.io/">Angular CLI</a> communicating with a <a href="https://spring.io/projects/spring-boot">Spring Boot</a> server generated from a <a href="https://swagger.io/docs/open-source-tools/swagger-codegen/">Swagger Codegen</a> <a href="https://en.wikipedia.org/wiki/YAML">yml</a> API model.
 
+## Fire it up and check it out
+Because you are impatient to see this thing work, this section shows you how to start up the node and REST AIP servers and let you play around without rebuilding anything.
+
+First start up the **Spring Boot REST API server** build from the yaml model...
+```
+$ java -jar hello-world-server/build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar
+```
+
+Then start up the **Node server with the OpenAPI client** built from the yaml model for communicaton with the server above...
+```
+$ cd hello-world-client/client; ng serve --open
+```
+
+On the web page that appears enter text in the box to the left of the **Send to Server** button, and click the button. The text that you entered will be sent to the REST API server using an OpenAPI client and the response will be displayed below.
+
+I like to use Chrome Developer Tools to look at the network access and set breakpoints in the browser. If you start the REST API server within IntelliJ you can set breakpoints and confirm that the request goest to the server.
+
+Enjoy!
+
 ## Step One: Build the Angular CLI node client
 From the project directory you can rebuild a generic Angular CLI client ...
 
@@ -13,7 +32,7 @@ $ ./scripts/build-client.sh
 Project 'client' successfully created.
 ```
 
-Then start the node server for the AngularCLI client available at 'http://localhost:4200/' ...
+Then start the node server for the AngularCLI client available at [http://localhost:4200/](http://localhost:4200/) ...
 
 ```
 $ cd $angularCliAppBaseDir/client; ng serve --open
@@ -31,7 +50,7 @@ $ rm -rf $swaggerApiBaseDir
 $ ./scripts/build-angular-typescript-swagger-codegen-api.sh
 ```
 
-Again, start the client available at 'http://localhost:4200/'
+Again, start the client available at [http://localhost:4200/](http://localhost:4200/) ...
 
 ```
 $ cd $angularCliAppBaseDir/client; ng serve --open
@@ -51,17 +70,17 @@ $ ./gradlew clean shadowJar
 $ java -jar  build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar
 ```
 
-You can test the server REST API endpoint using the following the **curl** utility from the command line:
+You can test the server REST API endpoint [http://localhost:8080/hello](http://localhost:8080/hello) using the following the **curl** utility from the command line:
 
 ```
 $ brew install curl
-$ curl -v -X GET -H "Content-Type: application/json" "http://localhost:8080/hello"
+$ curl -v -X GET -H "Content-Type: application/json" http://localhost:8080/hello
 {"message":"Hello!"}
-$ curl -v -X GET -H "Content-Type: application/json" "http://localhost:8080/hello?name=Froto"
+$ curl -v -X GET -H "Content-Type: application/json" http://localhost:8080/hello?name=Froto
 {"message":"Hello Froto!"}
 ```
 
 ## Step Four: Putting it all together
-Go to the AnngularCLI/ app running on http://localhost:4200 and enter a string in the text box next to the button that says "Send to Server" and click on the button.
+Go to the AnngularCLI/ app running on [http://localhost:4200](http://localhost:4200) and enter a string in the text box next to the button that says "Send to Server" and click on the button.
 The OpenAPI Angular/typescript client will send a message to the Java SpingBoot server and display the returned message below the box with the word "Hello " before the word that you entered and "!" after it.
 

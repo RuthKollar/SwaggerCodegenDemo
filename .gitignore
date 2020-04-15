@@ -4,3 +4,5 @@
 .idea/**
 lib/**
 **~
+hello-world-server/build/hello-world-server/tmp/*
+hello-world-server/build/hello-world-server/swagger-spring.iml

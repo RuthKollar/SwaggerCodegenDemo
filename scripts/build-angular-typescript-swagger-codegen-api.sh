@@ -115,7 +115,7 @@ if [ ! -d client ] ; then
     fi
 
     echo "### Copying client/src/app files..."
-    cp ../../scripts/client/src/app/* ../../$angularCliAppBaseDir/client/src/app
+    cp -R ../../scripts/client/src/* ../../$angularCliAppBaseDir/client/src/
 
     echo "### One last npm install..."
     cd ../../$angularCliAppBaseDir/client ; npm install

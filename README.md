@@ -38,7 +38,7 @@ $ cd $angularCliAppBaseDir/client; ng serve --open
 ## Step Three: Create the Spring Boot REST API server from the YML file
 In the  module named **hello-world-server** you will need to open **File / Project Structure...** and set **/ Project Settings / Project / Project SDK:** to **1.8**, and **Project language level:** to **8 - Lambdas, type annotations etc.**.
 
-Then refresh the gradle dependencies, and under the gradle tab **hello-world / Tasks / build** run the tasks **clean**, and then **jar**.
+Then refresh the gradle dependencies, and under the gradle tab **hello-world / Tasks / build** run the tasks **clean**, and in **hello-world / Tasks / shadow** run the task **shadowJar**.
 
 After that (also in IntelliJ) you can run (right click and select run) the class **io.swagger.Swagger2SpringBoot** found in **hello-world-server/build/hello-world-server/src/main/java**, or run the JAR file found at **hello-world-server/build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar**.
 

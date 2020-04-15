@@ -20,6 +20,7 @@ buildscript {
 apply plugin: 'base'
 apply plugin: 'idea'
 apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
 
 import io.swagger.codegen.DefaultGenerator
 import io.swagger.codegen.config.CodegenConfigurator

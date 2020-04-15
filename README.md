@@ -25,6 +25,8 @@ Stop the node server with '^C'.
 From the project directory, create a directory **api** and copy **./scripts/swagger.yml** to that directory. Then to build the REST API client and install it as a node module in the AngularCLI client created earlier ...
 
 ```
+$ mkdir -p ./api
+$ cp ./scripts/swagger.yml ./api
 $ rm -rf $swaggerApiBaseDir
 $ ./scripts/build-angular-typescript-swagger-codegen-api.sh
 ```
@@ -38,7 +40,7 @@ $ cd $angularCliAppBaseDir/client; ng serve --open
 ## Step Three: Create the Spring Boot REST API server from the YML file
 In the  module named **hello-world-server** you will need to open **File / Project Structure...** and set **/ Project Settings / Project / Project SDK:** to **1.8**, and **Project language level:** to **8 - Lambdas, type annotations etc.**.
 
-Then refresh the gradle dependencies, and under the gradle tab **hello-world / Tasks / build** run the tasks **clean**, and in **hello-world / Tasks / shadow** run the task **shadowJar**.
+Then refresh the gradle dependencies, and under the gradle tab **hello-world / Tasks / build** run the task **clean**, and in **hello-world / Tasks / shadow** run the task **shadowJar**.
 
 After that (also in IntelliJ) you can run (right click and select run) the class **io.swagger.Swagger2SpringBoot** found in **hello-world-server/build/hello-world-server/src/main/java**, or run the JAR file found at **hello-world-server/build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar**.
 

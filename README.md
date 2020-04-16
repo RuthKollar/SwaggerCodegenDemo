@@ -19,7 +19,7 @@ On the web page that appears enter text in the box to the left of the **Send to 
 
 I like to use Chrome Developer Tools to look at the network access and set breakpoints in the browser. If you start the REST API server within IntelliJ you can set breakpoints and confirm that the request goest to the server.
 
-Enjoy!
+Enjoy! :simple_smile:
 
 ## Step One: Build the Angular CLI node client
 From the project directory you can rebuild a generic Angular CLI client ...

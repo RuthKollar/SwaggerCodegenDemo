@@ -1,9 +1,9 @@
 # Swagger Codegen Demo
 
-> The purpose of this repository is to create THE MOST minimal end-to-end example of a web client using <a href="https://cli.angular.io/">Angular CLI</a> communicating with a <a href="https://spring.io/projects/spring-boot">Spring Boot</a> server generated from a <a href="https://swagger.io/docs/open-source-tools/swagger-codegen/">Swagger Codegen</a> <a href="https://en.wikipedia.org/wiki/YAML">yml</a> API model.
+> The purpose of this repository is to create THE MOST minimal end-to-end example of a web client using <a href="https://cli.angular.io/">Angular CLI</a> with a communicating with a <a href="https://spring.io/projects/spring-boot">Spring Boot</a> server generated from a <a href="https://swagger.io/docs/open-source-tools/swagger-codegen/">Swagger Codegen</a> <a href="https://en.wikipedia.org/wiki/YAML">yml</a> API model.
 
 ## Fire it up and check it out
-Because (I hope) you are impatient to see this thing work, this section shows you how to start up the node and REST AIP servers and let you play around without rebuilding anything.
+Because (I hope) you are impatient to see this thing work, this section shows you how to start up the node and REST API servers and let you play around without rebuilding anything.
 
 First start up the **Spring Boot REST API server** built from the yaml model...
 ```
@@ -12,7 +12,7 @@ $ java -jar hello-world-server/build/hello-world-server/libs/hello-world-server-
 
 Then start up the **Node server with the OpenAPI client** built from the yaml model for communicaton with the server above...
 ```
-$ cd hello-world-client/client; ng serve --open
+$ cd hello-world-client/client; npm install; ng serve --open
 ```
 
 On the web page that appears enter text in the box to the left of the **Send to Server** button, and click the button. The text that you entered will be sent to the REST API server using an OpenAPI client and the response will be displayed below the text box.
@@ -35,7 +35,7 @@ Project 'client' successfully created.
 Then start the node server for the AngularCLI client available at [http://localhost:4200/](http://localhost:4200/) ...
 
 ```
-$ cd $angularCliAppBaseDir/client; ng serve --open
+$ cd hello-world-client/client; npm install; ng serve --open
 ```
 
 Stop the node server with '^C'.
@@ -53,7 +53,7 @@ $ ./scripts/build-angular-typescript-swagger-codegen-api.sh
 Again, start the client available at [http://localhost:4200/](http://localhost:4200/) ...
 
 ```
-$ cd $angularCliAppBaseDir/client; ng serve --open
+$ cd hello-world-client/client; npm install; ng serve --open
 ```
 
 ## Step Three: Create the Spring Boot REST API server from the YML file

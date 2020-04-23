@@ -10,12 +10,12 @@ First start up the **Spring Boot REST API server** built from the yaml model...
 $ java -jar hello-world-server/build/hello-world-server/libs/hello-world-server-0.0.1-SNAPSHOT.jar
 ```
 
-Then rebuild the **node_modules* directory from the **package.json** file, and start up the **Node server with the OpenAPI client** built from the yaml model for communicaton with the server above...
+Then rebuild the **node_modules** from the **package.json** file, and start up the **Node server with the OpenAPI client** built from the yaml model for communicaton with the server above...
 ```
 $ cd hello-world-client/client; npm install; ng serve --open
 ```
 
-On the web page that appears enter text in the box to the left of the **Send to Server** button, and click the button. The text that you entered will be sent to the REST API server using an OpenAPI client and the response will be displayed below the text box.
+On the [web page](http://localhost:4200/) that appears enter text in the box to the left of the **Send to Server** button, and click the button. The text that you entered will be sent to the REST API server using an OpenAPI client and the response will be displayed below the text box.
 
 I like to use Chrome Developer Tools to look at the network access and set breakpoints in the browser. If you start the REST API server within IntelliJ in debug mode you can set breakpoints in the server and confirm that the request goes to the server.
 
